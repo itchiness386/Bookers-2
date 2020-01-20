@@ -1,5 +1,25 @@
-<h2>Users info</h2>
+<div class="body">
+	<div class="container">
+		<p></p>
 
-<%= form_for(@user) do |f| %>
-	<%= f.label :name %>
-	<%= f.text_area :name%>
+		<h2>User info</h2>
+
+		<%= form_for(@user) do |f| %>
+			<div class="field">
+				<%= f.label :name %>
+				<%= f.text_field :name, class: "name" %>
+			</div>
+
+			<div class="field">
+				<%= f.label :image %>
+			</div>
+
+			<div class="field">
+				<%= f.label :introduction %>
+				<%= f.text_area :introduction, class: "introduction" %>
+			</div>
+
+			<div class="actions">
+				<%= f.submit 'Update User' %>
+			</div>
+		<% end %>

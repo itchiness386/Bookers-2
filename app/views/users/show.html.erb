@@ -1,1 +1,38 @@
-<h2>Users info</h2>
+<div class="body">
+	<div class="container">
+		<p></p>
+
+			<div class="row">
+				<div class="col-xs-3">
+
+				<%= render  'users/userinfo', user: @user %>
+
+				<%= render 'books/newbook', book: @book %>
+
+				</div>
+
+				<div class="col-xs-9">
+					<h2>Books</h2>
+					<table class="table table-hover table-inverse">
+						<thead>
+							<tr>
+								<th></th>
+								<th>Title</th>
+								<th>Opinion</th>
+								<th colspan="3"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td></td>
+								<% @books.each do |book| %>
+								<td><%= book.title %></td>
+								<td><%= book.body %></td>
+								<% end %>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+	</div>
+</div>
