@@ -29,12 +29,14 @@
 								<td>
 									<%= @book.body %>
 								</td>
-								<td>
-									<%= link_to 'Edit', edit_book_path(@book.id), class: "btn-sm btn-success edit_book_#{@book.id}" %>
-								</td>
-								<td>
-									<%= link_to 'Destroy', book_path(@book.id), method: :delete, class: "btn-sm btn-danger destroy_book_#{@book.id}" %>
-								</td>
+								<% if @user == current_user %>
+									<td>
+										<%= link_to 'Edit', edit_book_path(@book.id), class: "btn-sm btn-success edit_book_#{@book.id}" %>
+									</td>
+									<td>
+										<%= link_to 'Destroy', book_path(@book.id), method: :delete, class: "btn-sm btn-danger destroy_book_#{@book.id}" %>
+									</td>
+								<% end %>
 							</tr>
 						</tbody>
 					</table>
