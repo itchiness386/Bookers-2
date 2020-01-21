@@ -12,6 +12,7 @@
 
 			<div class="field">
 				<%= f.label :image %>
+			    <%= f.attachment_field :profile_image, class: "user_image" %>
 			</div>
 
 			<div class="field">
@@ -23,3 +24,6 @@
 				<%= f.submit 'Update User' %>
 			</div>
 		<% end %>
+
+	</div>
+</div>
