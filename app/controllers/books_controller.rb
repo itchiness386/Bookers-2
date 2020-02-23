@@ -24,6 +24,7 @@ class BooksController < ApplicationController
     @newbook = Book.new
   	@book = Book.find(params[:id])
   	@user = @book.user
+    @book_comment = BookComment.new
   end
 
   def edit
@@ -53,7 +54,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :user)
   end
 
   def corrent_user
