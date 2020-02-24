@@ -1,9 +1,6 @@
 <div class="body">
 	<div class="container">
 		<p id="notice"><%= notice %></p>
-		<% if flash[:success] %>
-		  <p><%= flash[:success] %></p>
-		<% end %>
 
 			<div class="row">
 				<div class="col-xs-3">
@@ -47,30 +44,32 @@
 				</div>
 
 				<div class="col-xs-9">
-					<h2>Books</h2>
-					<table class="table table-hover table-inverse">
+					<h2>follows</h2>
+					<table class="table">
 						<thead>
 							<tr>
-								<th></th>
-								<th>Title</th>
-								<th>Opinion</th>
-								<th colspan="3"></th>
+								<th>image</th>
+								<th>name</th>
+								<th colspan="4"></th>
 							</tr>
 						</thead>
 						<tbody>
-							<% @books.each do |book| %>
+							<% @users.each do |user| %>
 							<tr>
-								<td><%= link_to user_path(@user.id) do %>
-									<%= attachment_image_tag  @user, :profile_image, :fill, 40, 40, format: 'jpeg', class: "attachment user profile_image fallback", fallback: "no_image.jpg", size:'40x40' %>
-									<% end %>
-								</td>
-								<td><%= link_to book_path(book) do %>
-									<%= book.title %>
-									<% end %>
-								</td>
-								<td><%= book.body %></td>
-								<td>コメント数:<%= book.book_comments.count %></td>
-
+								<td><%= attachment_image_tag  user, :profile_image, :fill, 40, 40, format: 'jpeg', class: "attachment user profile_image fallback", fallback: "no_image.jpg", size:'40x40' %></td>
+								<td><%= user.name %></td>
+								<td>フォロー数:<%= user.follower.count %></td>
+								<td>フォロワー数:<%= user.followed.count %></td>
+								<td>
+									<% if user != current_user %>
+										<% if current_user.following?(user) %>
+								          <%= link_to 'フォロー外す', unfollow_path(user.id), method: :POST %>
+								        <% else %>
+								          <%= link_to 'フォローする', follow_path(user.id), method: :POST %>
+								        <% end %>
+								    <% end %>
+							    </td>
+							 	<td><%= link_to 'Show', user_path(user.id) %></td>
 							</tr>
 							<% end %>
 						</tbody>
