@@ -1,48 +1,42 @@
-<div class="body">
-	<div class="container">
-		<p id="notice"><%= notice %></p>
+<div class="row">
+	<div class="col-xs-3">
 
-			<div class="row">
-				<div class="col-xs-3">
+	<%= render  'users/userinfo' %>
 
-				<%= render  'users/userinfo', user: @user %>
+	<%= render 'books/newbook', book: @newbook %>
 
-				<%= render 'books/newbook', book: @newbook %>
+	</div>
 
-				</div>
-
-				<div class="col-xs-9">
-					<h2>Users</h2>
-					<table class="table">
-						<thead>
-							<tr>
-								<th>image</th>
-								<th>name</th>
-								<th colspan="4"></th>
-							</tr>
-						</thead>
-						<tbody>
-							<% @users.each do |user| %>
-							<tr>
-								<td><%= attachment_image_tag  user, :profile_image, :fill, 40, 40, format: 'jpeg', class: "attachment user profile_image fallback", fallback: "no_image.jpg", size:'40x40' %></td>
-								<td><%= user.name %></td>
-								<td>フォロー数:<%= user.follower.count %></td>
-								<td>フォロワー数:<%= user.followed.count %></td>
-								<td>
-									<% if user != current_user %>
-										<% if current_user.following?(user) %>
-								          <%= link_to 'フォロー外す', unfollow_path(user.id), method: :POST %>
-								        <% else %>
-								          <%= link_to 'フォローする', follow_path(user.id), method: :POST %>
-								        <% end %>
-									<% end %>
-							    </td>
-							 	<td><%= link_to 'Show', user_path(user.id) %></td>
-							</tr>
-							<% end %>
-						</tbody>
-					</table>
-				</div>
-			</div>
+	<div class="col-xs-9">
+		<h2>Users</h2>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>image</th>
+					<th>name</th>
+					<th colspan="4"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @users.each do |user| %>
+				<tr>
+					<td><%= attachment_image_tag  user, :profile_image, :fill, 40, 40, format: 'jpeg', class: "attachment user profile_image fallback", fallback: "no_image.jpg", size:'40x40' %></td>
+					<td><%= user.name %></td>
+					<td>フォロー数:<%= user.follower.count %></td>
+					<td>フォロワー数:<%= user.followed.count %></td>
+					<td>
+						<% if user != current_user %>
+							<% if current_user.following?(user) %>
+					          <%= link_to 'フォロー外す', unfollow_path(user.id), method: :POST %>
+					        <% else %>
+					          <%= link_to 'フォローする', follow_path(user.id), method: :POST %>
+					        <% end %>
+						<% end %>
+				    </td>
+				 	<td><%= link_to 'Show', user_path(user.id) %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
 	</div>
 </div>
