@@ -1,81 +1,76 @@
-<div class="body">
-	<div class="container">
-		<p id="notice"><%= notice %></p>
-		<% if flash[:success] %>
-		  <p><%= flash[:success] %></p>
+<% if flash[:success] %>
+  <p><%= flash[:success] %></p>
+<% end %>
+
+<div class="row">
+	<div class="col-xs-3">
+
+	<h2>User info</h2>
+	<%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', class: "attachment user profile_image fallback", fallback: "no_image.jpg" %>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>name</th>
+				<th><%= @user.name %></th>
+			</tr>
+			<tr>
+				<th>introduction</th>
+				<th><%= @user.introduction %></th>
+			</tr>
+			<tr>
+				<th>follows</th>
+				<th><%= link_to @user.follower.count, follows_path(@user) %></th>
+			</tr>
+			<tr>
+				<th>followers</th>
+				<th><%= link_to @user.followed.count, followers_path(@user) %></th>
+			</tr>
+		</tbody>
+	</table>
+	<div class="row">
+		<% if @user == current_user %>
+			<%= link_to '', edit_user_path(current_user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{current_user.id}" %>
+		<% else %>
+			<% if current_user.following?(@user) %>
+	          <%= link_to 'フォロー外す', unfollow_path(@user.id), method: :POST, class: "btn btn-primary col-xs-12" %>
+	        <% else %>
+	          <%= link_to 'フォローする', follow_path(@user.id), method: :POST, class: "btn btn-success col-xs-12" %>
+	        <% end %>
 		<% end %>
+	</div>
 
-			<div class="row">
-				<div class="col-xs-3">
+	<%= render 'books/newbook', book: @newbook %>
 
-				<h2>User info</h2>
-				<%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', class: "attachment user profile_image fallback", fallback: "no_image.jpg" %>
-				<table class="table">
-					<tbody>
-						<tr>
-							<th>name</th>
-							<th><%= @user.name %></th>
-						</tr>
-						<tr>
-							<th>introduction</th>
-							<th><%= @user.introduction %></th>
-						</tr>
-						<tr>
-							<th>follows</th>
-							<th><%= link_to @user.follower.count, follows_path(@user) %></th>
-						</tr>
-						<tr>
-							<th>followers</th>
-							<th><%= link_to @user.followed.count, followers_path(@user) %></th>
-						</tr>
-					</tbody>
-				</table>
-				<div class="row">
-					<% if @user == current_user %>
-						<%= link_to '', edit_user_path(current_user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{current_user.id}" %>
-					<% else %>
-						<% if current_user.following?(@user) %>
-				          <%= link_to 'フォロー外す', unfollow_path(@user.id), method: :POST, class: "btn btn-primary col-xs-12" %>
-				        <% else %>
-				          <%= link_to 'フォローする', follow_path(@user.id), method: :POST, class: "btn btn-success col-xs-12" %>
-				        <% end %>
-					<% end %>
-				</div>
+	</div>
 
-				<%= render 'books/newbook', book: @newbook %>
+	<div class="col-xs-9">
+		<h2>Books</h2>
+		<table class="table table-hover table-inverse">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Title</th>
+					<th>Opinion</th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @books.each do |book| %>
+				<tr>
+					<td><%= link_to user_path(@user.id) do %>
+						<%= attachment_image_tag  @user, :profile_image, :fill, 40, 40, format: 'jpeg', class: "attachment user profile_image fallback", fallback: "no_image.jpg", size:'40x40' %>
+						<% end %>
+					</td>
+					<td><%= link_to book_path(book) do %>
+						<%= book.title %>
+						<% end %>
+					</td>
+					<td><%= book.body %></td>
+					<td>コメント数:<%= book.book_comments.count %></td>
 
-				</div>
-
-				<div class="col-xs-9">
-					<h2>Books</h2>
-					<table class="table table-hover table-inverse">
-						<thead>
-							<tr>
-								<th></th>
-								<th>Title</th>
-								<th>Opinion</th>
-								<th colspan="3"></th>
-							</tr>
-						</thead>
-						<tbody>
-							<% @books.each do |book| %>
-							<tr>
-								<td><%= link_to user_path(@user.id) do %>
-									<%= attachment_image_tag  @user, :profile_image, :fill, 40, 40, format: 'jpeg', class: "attachment user profile_image fallback", fallback: "no_image.jpg", size:'40x40' %>
-									<% end %>
-								</td>
-								<td><%= link_to book_path(book) do %>
-									<%= book.title %>
-									<% end %>
-								</td>
-								<td><%= book.body %></td>
-								<td>コメント数:<%= book.book_comments.count %></td>
-
-							</tr>
-							<% end %>
-						</tbody>
-					</table>
-				</div>
-			</div>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
 	</div>
 </div>
