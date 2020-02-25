@@ -1,0 +1,5 @@
+// booksページ
+$('#books_<%= @book.id %>').html("<%= j(render partial: 'books/books', locals: { book: @book }) %>");
+
+// bookページ
+$('#book_<%= @book.id %>').html("<%= j(render partial: 'books/book', locals: { book: @book }) %>");
