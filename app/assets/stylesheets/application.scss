@@ -96,5 +96,9 @@ header .navbar-left span {
 	padding-top: 10px;
 }
 
+#map {
+  height: 600px;
+}
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
