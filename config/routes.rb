@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   get 'search/search'
   root to: 'home#index'
   get "home/about"
-  devise_for :users
+  devise_for :users, :controllers => {
+    :registrations => 'users/registrations'
+  }
   resources :users, only: [:index, :show, :edit, :update]
   post 'follow/:id' => 'relationships#follow', as: 'follow' # フォローする
   post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow' # フォロー外す
